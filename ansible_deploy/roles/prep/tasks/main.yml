@@ -1,0 +1,23 @@
+---
+- name: Останавливаем все Docker-контейнеры
+  shell: docker stop $(docker ps -aq) || echo "Контейнеры уже остановлены"
+  
+- name: Удаляем все Docker-контейнеры
+  shell: docker rm $(docker ps -aq) || echo "Контейнеры уже удалены"
+  
+- name: Удаляем все Docker-образы
+  shell: docker rmi -f $(docker images -q) || echo "Образы уже удалены"
+
+- name: Распаковываем архивы
+  shell: gunzip -f /home/ubuntu/*.tar.gz
+
+- name: Загружаем Docker-образы
+  shell: |
+    docker load < /home/ubuntu/backend.tar
+    docker load < /home/ubuntu/control_system.tar
+    docker load < /home/ubuntu/web_app.tar
+
+- name: Удаляем архивы
+  file:
+    path: "/home/ubuntu/*.tar*"
+    state: absent

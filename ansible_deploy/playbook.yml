@@ -1,0 +1,7 @@
+---
+- name: Деплой приложения на сервере
+  hosts: servers
+  become: yes
+  roles:
+    - role: prep
+    - role: compose

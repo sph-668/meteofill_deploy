@@ -1,0 +1,3 @@
+---
+- name: Запускаем Docker Compose
+  shell: docker-compose -f /home/ubuntu/docker-compose_deploy.yml up -d
